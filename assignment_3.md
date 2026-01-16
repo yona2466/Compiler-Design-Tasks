@@ -31,27 +31,38 @@ If the base case exists but the recursive call happens *before* the check, the c
 ## 3. Technical Example: Safe vs. Dangerous
 **Dangerous Code (Infinite):**
 ```cpp
-void count(int n) {
+
+void count(int n)
+{
     // No 'if' check here!
     count(n - 1); // Infinite Recursion
 }
 ```
 ## Safe Code (Terminating):
 
-void count(int n) {
+void count(int n)
+{
     if (n <= 0) return; // Base Case
+    
     count(n - 1);       // Progress towards base case
 }
 
 ## 4. Visual Logic Flow
 
 graph TD
+
     Start[Analyze Function] --> CheckCall{Does it call itself?}
+    
     CheckCall -- No --> Safe[Mark as Safe]
+
     CheckCall -- Yes --> CheckBase{Is there a Base Case?}
+    
     CheckBase -- No --> Error[FLAG: Infinite Recursion]
+    
     CheckBase -- Yes --> CheckProgress{Does argument change?}
+    
     CheckProgress -- No --> Warning[FLAG: Possible Infinite Loop]
+    
     CheckProgress -- Yes --> ProbableSafe[Mark as Likely Safe]
 
    ## 5. C++ Implementation: The "Heuristic Detector"
@@ -59,49 +70,42 @@ This program simulates how a compiler's static analyzer would check a function f
 
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
-// --- Step 1: Define a Function structure for analysis ---
+// Structure to hold function metadata for static analysis
 struct FunctionInfo {
     string name;
     bool hasBaseCase;
     bool callsSelf;
 };
 
-// --- Step 2: The Heuristic Checker ---
+// The Heuristic Detection Logic
 void analyzeRecursion(FunctionInfo func) {
-    cout << "Analyzing Function: " << func.name << "..." << endl;
+    cout << "Analyzing: " << func.name << endl;
     
-    if (func.callsSelf) {
-        if (!func.hasBaseCase) {
-            cout << "CRITICAL ERROR: Infinite Recursion detected in '" << func.name << "'!" << endl;
-            cout << "Reason: Function calls itself without a terminating condition." << endl;
-        } else {
-            cout << "SUCCESS: '" << func.name << "' appears to have a valid base case." << endl;
-        }
+    if (func.callsSelf && !func.hasBaseCase) {
+        cout << "STATUS: [!!] CRITICAL ERROR detected." << endl;
+        cout << "REASON: Infinite recursion (No Base Case)." << endl;
+    } else if (func.callsSelf && func.hasBaseCase) {
+        cout << "STATUS: [OK] Recursive but has base case." << endl;
     } else {
-        cout << "INFO: '" << func.name << "' is not recursive." << endl;
+        cout << "STATUS: [OK] Function is non-recursive." << endl;
     }
     cout << "------------------------------------------" << endl;
 }
 
 int main() {
-    cout << "--- STATIC RECURSION DETECTOR START ---" << endl << endl;
+    cout << "--- Static Recursion Analysis ---" << endl << endl;
 
-    // Simulate a dangerous function
-    FunctionInfo badFunc = {"infiniteCounter", false, true};
-    
-    // Simulate a safe function
-    FunctionInfo goodFunc = {"safeFactorial", true, true};
+    FunctionInfo f1 = {"infiniteCounter", false, true};
+    FunctionInfo f2 = {"safeFactorial", true, true};
 
-    analyzeRecursion(badFunc);
-    analyzeRecursion(goodFunc);
+    analyzeRecursion(f1);
+    analyzeRecursion(f2);
 
     return 0;
 }
-
 
 ## 6. Importance & Conclusion
 ## Importance
@@ -112,4 +116,5 @@ Reliability: Helps developers catch "off-by-one" errors in recursive logic durin
 Optimization: Compilers can use these checks to decide whether to perform Tail Call Optimization.
 
 ## Conclusion
-Static detection of infinite recursion is a vital part of modern compiler safety. While it is impossible to detect every case due to the complexity of logic, basic heuristics catch the most common "Missing Base Case" errors, saving time and preventing system crashes.
+Static detection of infinite recursion is a vital part of modern compiler safety. While it is impossible to detect 
+every case due to the complexity of logic, basic heuristics catch the most common "Missing Base Case" errors, saving time and preventing system crashes.
