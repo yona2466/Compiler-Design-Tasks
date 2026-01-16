@@ -15,8 +15,8 @@ Left-factoring is a grammar transformation technique used to remove **nondetermi
 ## 2. The Core Problem: Ambiguity and Common Prefixes
 Imagine a parser encountered the following rules for a statement (`S`):
 1. `S → if E then S`
-2. 
-3. `S → if E then S else S`
+2.  `S → if E then S else S`
+
 
 If the parser sees the token `if`, it does not know whether to choose Rule 1 or Rule 2 because they both start with `if E then S`.
 
@@ -59,8 +59,11 @@ S -> if E then S
 ```
 ## After Left-Factoring (Simple Version):
 S  -> if E then S S'
+
 S  -> other
+
 S' -> else S | ε
+
 ## 5. C++ Implementation Snippet
 This code demonstrates the logic of "factoring" by checking if an input string matches a common prefix before deciding the next step.
 
