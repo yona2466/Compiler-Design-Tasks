@@ -50,8 +50,11 @@ This is the most famous example of left-factoring in modern programming language
 **Before Left-Factoring:**
 ```text
 S -> if E then S
+
    | if E then S else S
+
    | other
+
 ```
 ## After Left-Factoring (Simple Version):
 S  -> if E then S S'
@@ -60,39 +63,48 @@ S' -> else S | ε
 ## 5. C++ Implementation Snippet
 This code demonstrates the logic of "factoring" by checking if an input string matches a common prefix before deciding the next step.
 
+---
+
+## 5. C++ Implementation Snippet
+
+```cpp
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-// Function for the factored suffix (S')
+// --- Step 2: S' (Suffix Handling) ---
 void parseSPrime(string lookahead) {
     if (lookahead == "else") {
-        cout << "Step 2: S' matched 'else S'" << endl;
+        cout << "Result: S' matched 'else S'" << endl;
     } else {
-        cout << "Step 2: S' matched 'epsilon' (Empty)" << endl;
+        cout << "Result: S' matched 'epsilon' (Empty)" << endl;
     }
 }
 
-// Function for the main statement (S)
+// --- Step 1: Common Prefix Handling ---
 void parseS(string lookahead, bool hasElse) {
     if (lookahead == "if") {
-        cout << "Step 1: Matched common prefix 'if E then S'" << endl;
+        cout << "Process: Matched common prefix 'if E then S'" << endl;
         if (hasElse) {
             parseSPrime("else");
         } else {
             parseSPrime("end_of_statement");
         }
     } else {
-        cout << "Step 1: Matched 'other'" << endl;
+        cout << "Process: Matched 'other'" << endl;
     }
 }
 
 int main() {
-    cout << "--- Testing Left-Factored Logic ---" << endl;
+    cout << "--- Starting Left-Factored Parser Logic ---" << endl;
+    
     parseS("if", true); 
+    
+    cout << "--- Execution Complete ---" << endl;
     return 0;
 }
+```
 ## 6. Importance in Modern Compiler Construction
 Efficiency: By removing the need for backtracking, the compiler runs in linear time.
 
