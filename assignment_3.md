@@ -29,6 +29,7 @@ If the base case exists but the recursive call happens *before* the check, the c
 ---
 
 ## 3. Technical Example: Safe vs. Dangerous
+
 **Dangerous Code (Infinite):**
 ```cpp
 
@@ -44,7 +45,7 @@ void count(int n)
 {
     if (n <= 0) return; // Base Case
     
-    count(n - 1);       // Progress towards base case
+ count(n - 1);       // Progress towards base case
 }
 
 ## 4. Visual Logic Flow
@@ -67,7 +68,7 @@ graph TD
 
    ## 5. C++ Implementation: The "Heuristic Detector"
 This program simulates how a compiler's static analyzer would check a function for the "Missing Base Case" rule.
-
+```
 #include <iostream>
 #include <string>
 
@@ -106,6 +107,7 @@ int main() {
 
     return 0;
 }
+```
 
 ## 6. Importance & Conclusion
 ## Importance
