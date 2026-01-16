@@ -53,24 +53,19 @@ S -> if E then S
    | if E then S else S
    | other
 ```
-## After Left-Factoring:
-S  -> if E then S S' | other
+## After Left-Factoring (Simple Version):
+S  -> if E then S S'
+S  -> other
 S' -> else S | ε
-
 ## 5. C++ Implementation Snippet
 This code demonstrates the logic of "factoring" by checking if an input string matches a common prefix before deciding the next step.
 
 #include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 
-/**
- * Simulates a Left-Factored Parser choice.
- * The common prefix "if E then S" is handled first,
- * then the "S'" (suffix) is decided.
- */
+// Function for the factored suffix (S')
 void parseSPrime(string lookahead) {
     if (lookahead == "else") {
         cout << "Step 2: S' matched 'else S'" << endl;
@@ -79,27 +74,31 @@ void parseSPrime(string lookahead) {
     }
 }
 
+// Function for the main statement (S)
 void parseS(string lookahead, bool hasElse) {
     if (lookahead == "if") {
         cout << "Step 1: Matched common prefix 'if E then S'" << endl;
-        if (hasElse) parseSPrime("else");
-        else parseSPrime("end_of_statement");
+        if (hasElse) {
+            parseSPrime("else");
+        } else {
+            parseSPrime("end_of_statement");
+        }
     } else {
         cout << "Step 1: Matched 'other'" << endl;
     }
 }
 
 int main() {
-    cout << "--- Testing If-Then-Else Logic ---" << endl;
-    parseS("if", true); // Simulate 'if E then S else S'
+    cout << "--- Testing Left-Factored Logic ---" << endl;
+    parseS("if", true); 
     return 0;
 }
-6. Importance in Modern Compiler Construction
+## 6. Importance in Modern Compiler Construction
 Efficiency: By removing the need for backtracking, the compiler runs in linear time.
 
 Predictive Parsing: It is a requirement for generating LL(1) Parsing Tables.
 
 Syntax Error Handling: Easier for the compiler to point to exactly where a syntax error occurred.
 
-7. Conclusion
+## 7. Conclusion
 Left-factoring is a practical necessity for building fast, reliable compilers. By transforming the grammar to be deterministic, we ensure that the parser can make the correct decision the first time.
