@@ -63,11 +63,11 @@ Step 3: aAB -> aaAB     (Rule: A -> aA)
 Step 4: aaAB -> aaεB    (Rule: A -> ε)
 Step 5: aaB -> aab      (Rule: B -> b)
 ## Visual Parse tree
-      S
-     /   \
-    A     B
-   / \    |
-  a   A   b
+     S
+    /  \
+   A     B
+  / \    |
+ a   A   b
      / \
     a   A
         |
