@@ -52,6 +52,7 @@ This is the most famous example of left-factoring in modern programming language
 S -> if E then S
    | if E then S else S
    | other
+```
 ## After Left-Factoring:
 S  -> if E then S S' | other
 S' -> else S | ε
