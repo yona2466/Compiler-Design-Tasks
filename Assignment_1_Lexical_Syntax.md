@@ -43,6 +43,7 @@ int main() {
     tokenize("15 + 3 * 9");
     return 0;
 }
+```
 ## 3. Problem Solving: Parse Tree Construction
 
 Given Grammar:
