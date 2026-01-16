@@ -46,29 +46,28 @@ int main() {
 ```
 ## 3. Problem Solving: Parse Tree Construction
 
-Given Grammar:
+**Given Grammar:**
+* S → AB
+* A → aA | ε
+* B → bB | b
 
-S → AB
+**Target String:** `aab`
 
-A → aA | ε
+**Derivation steps:**
+1. **S -> AB**
+2. **AB -> aAB** (Rule: A -> aA)
+3. **aAB -> aaAB** (Rule: A -> aA)
+4. **aaAB -> aaεB** (Rule: A -> ε)
+5. **aaB -> aab** (Rule: B -> b)
 
-B → bB | b
-
-Target String: aab
-
-Derivation steps:
-Step 1: S -> AB
-Step 2: AB -> aAB       (Rule: A -> aA)
-Step 3: aAB -> aaAB     (Rule: A -> aA)
-Step 4: aaAB -> aaεB    (Rule: A -> ε)
-Step 5: aaB -> aab      (Rule: B -> b)
-## Visual Parse tree
-     S
-    /  \
-   A     B
-  / \    |
- a   A   b
-     / \
-    a   A
-        |
-        ε
+## Visual Parse Tree:
+```mermaid
+graph TD
+    S --> A1[A]
+    S --> B1[B]
+    A1 --> a1[a]
+    A1 --> A2[A]
+    A2 --> a2[a]
+    A2 --> A3[A]
+    A3 --> e[ε]
+    B1 --> b1[b]
