@@ -43,7 +43,8 @@ int main() {
     tokenize("15 + 3 * 9");
     return 0;
 }
-3. Problem Solving: Parse Tree Construction
+## 3. Problem Solving: Parse Tree Construction
+
 Given Grammar:
 
 S → AB
@@ -60,7 +61,7 @@ Step 2: AB -> aAB       (Rule: A -> aA)
 Step 3: aAB -> aaAB     (Rule: A -> aA)
 Step 4: aaAB -> aaεB    (Rule: A -> ε)
 Step 5: aaB -> aab      (Rule: B -> b)
-Visual Parse Tree:
+## Visual Parse Tree:
 S
      /   \
     A     B
