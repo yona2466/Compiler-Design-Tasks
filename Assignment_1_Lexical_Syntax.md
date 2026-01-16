@@ -14,7 +14,7 @@ Left recursion occurs when a grammar has a non-terminal `A` that can derive a st
 ---
 
 ## 2. C++: Arithmetic Expression Tokenizer
-This program identifies **Integers**, **Plus (+)**, and **Multiply (*)** tokens from an input string.
+This program identifies **Integers**, **Plus (+)**, and **Multiply (*)** tokens.
 
 ```cpp
 #include <iostream>
@@ -26,7 +26,6 @@ using namespace std;
 void tokenize(string input) {
     for (int i = 0; i < input.length(); i++) {
         if (isspace(input[i])) continue;
-
         if (isdigit(input[i])) {
             string val = "";
             while (i < input.length() && isdigit(input[i])) {
@@ -44,7 +43,7 @@ int main() {
     tokenize("15 + 3 * 9");
     return 0;
 }
-## 3. Problem Solving: Parse Tree Construction
+3. Problem Solving: Parse Tree Construction
 Given Grammar:
 
 S → AB
@@ -55,21 +54,14 @@ B → bB | b
 
 Target String: aab
 
-Step-by-Step Derivation:
-
-Step 1: Start with the root S. Apply rule S → AB.
-
-Step 2: Expand A using A → aA. (String: aAB)
-
-Step 3: Expand the new A using A → aA. (String: aaAB)
-
-Step 4: Expand the final A using A → ε. (String: aaB)
-
-Step 5: Expand B using B → b. (String: aab)
-
-Visual Parse Tree Structure:
-
-      S
+Derivation steps:
+Step 1: S -> AB
+Step 2: AB -> aAB       (Rule: A -> aA)
+Step 3: aAB -> aaAB     (Rule: A -> aA)
+Step 4: aaAB -> aaεB    (Rule: A -> ε)
+Step 5: aaB -> aab      (Rule: B -> b)
+Visual Parse Tree:
+S
      /   \
     A     B
    / \    |
